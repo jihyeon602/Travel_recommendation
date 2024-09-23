@@ -4,11 +4,11 @@ import pandas as pd
 # aihub : https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=data&dataSetSn=71780
 # 데이터셋 로드
 df_place = pd.read_csv('./tn_visit_area_info_방문지정보_D.csv', encoding='utf-8')
-df_place.head()
+#df_place.head()
 df_travel = pd.read_csv('./tn_travel_여행_D.csv')
-df_travel.head()
+#df_travel.head()
 df_traveler = pd.read_csv('./tn_traveller_master_여행객 Master_D.csv')
-df_traveler.head()
+#df_traveler.head()
 
 # 데이터 병합
 df = pd.merge(df_place, df_travel, on='TRAVEL_ID', how='left')
@@ -49,6 +49,7 @@ cat_features_names = [
 ]
 df_fil[cat_features_names[1:-1]] = df_fil[cat_features_names[1:-1]].astype(int)
 #df_fil
+df_fil.to_csv('./final.csv')
 
 # 데이터셋 분류
 from sklearn.model_selection import train_test_split
@@ -99,7 +100,10 @@ for i in range(1, 6):
 
   model.get_feature_importance(prettified=True)
 
-area_names = df_fil[['VISIT_AREA_NM']].drop_duplicates()
+# 전처리된 데이터 재로드
+df_fil_final = pd.read_csv('./final.csv', encoding='utf-8')
+
+area_names = df_fil_final[['VISIT_AREA_NM']].drop_duplicates()
 area_names
 
 # 여행자를 샘플로
@@ -115,7 +119,7 @@ traveler = {
     'TRAVEL_STYL_7' : 2,
     'TRAVEL_STYL_8' : 6,
     'TRAVEL_MOTIVE_1' : 3,
-    'TRAVEL_COMPANIONS_NUM' : 4.0,
+    'TRAVEL_COMPANIONS_NUM' : 1.0,
     'TRAVEL_MISSION_INT' : 5 }
 results = pd.DataFrame([], columns=['AREA', 'SCORE'])
 for area in area_names['VISIT_AREA_NM']:
