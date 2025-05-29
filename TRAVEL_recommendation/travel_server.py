@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Load the CatBoost model
 model = CatBoostRegressor()
-model.load_model('catboost_model.cbm')
+model.load_model('catboost_model_travel.cbm')
 
 # Load unique visit areas from your preprocessed data
 area_names = pd.read_csv('./tn_visit_area_info_방문지정보_A.csv')['VISIT_AREA_NM'].drop_duplicates().tolist()
