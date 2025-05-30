@@ -9,7 +9,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # ✅ MongoDB 연결 설정
-mongo_client = MongoClient("mongodb://localhost:27017/")
+mongo_client = MongoClient("mongodb://user:password@host:port/dbname")
 mongo_db = mongo_client["medicalqa"]
 log_collection = mongo_db["logs"]
 
@@ -70,7 +70,7 @@ def predict():
             }
             results.append(result)
 
-        # ✅ MongoDB에 저장
+        # MongoDB에 저장
         log_collection.insert_one({
             "query": input_text,
             "results": results

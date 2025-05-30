@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 # ✅ MongoDB 연결
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb://user:password@host:port/dbname")
 db = client["medicalqa"]
 log_collection = db["chat_logs"]
 
@@ -45,7 +45,7 @@ if submitted and user_input:
             reply = "❌ 서버 오류가 발생했습니다."
         st.session_state.generated.append(reply)
 
-        # ✅ MongoDB 로그 저장
+        # MongoDB 로그 저장
         log_collection.insert_one({
             "user_input": user_input,
             "response": reply,
